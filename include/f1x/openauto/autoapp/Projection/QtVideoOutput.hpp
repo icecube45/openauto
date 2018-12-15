@@ -55,8 +55,9 @@ protected slots:
 
 private:
     SequentialBuffer videoBuffer_;
-    std::unique_ptr<QVideoWidget> videoWidget_;
+    // std::unique_ptr<QVideoWidget> videoWidget_;
     std::unique_ptr<QMediaPlayer> mediaPlayer_;
+    QWidget *mainWindow;
 };
 
 }

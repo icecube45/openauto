@@ -19,7 +19,7 @@
 #include <QApplication>
 #include <f1x/openauto/autoapp/Projection/QtVideoOutput.hpp>
 #include <f1x/openauto/Common/Log.hpp>
-
+#include <QFrame>
 namespace f1x
 {
 namespace openauto
@@ -32,8 +32,9 @@ namespace projection
 QtVideoOutput::QtVideoOutput(configuration::IConfiguration::Pointer configuration)
     : VideoOutput(std::move(configuration))
 {
+    mainWindow = QApplication::activeWindow(); //Honestly this might break things but it hasn't yet in testing - is there a better way?
     this->moveToThread(QApplication::instance()->thread());
-    connect(this, &QtVideoOutput::startPlayback, this, &QtVideoOutput::onStartPlayback, Qt::QueuedConnection);
+    connect(this, &QtVideoOutput::startPlayback,  this, &QtVideoOutput::onStartPlayback, Qt::QueuedConnection);
     connect(this, &QtVideoOutput::stopPlayback, this, &QtVideoOutput::onStopPlayback, Qt::QueuedConnection);
 
     QMetaObject::invokeMethod(this, "createVideoOutput", Qt::BlockingQueuedConnection);
@@ -42,7 +43,7 @@ QtVideoOutput::QtVideoOutput(configuration::IConfiguration::Pointer configuratio
 void QtVideoOutput::createVideoOutput()
 {
     OPENAUTO_LOG(debug) << "[QtVideoOutput] create.";
-    videoWidget_ = std::make_unique<QVideoWidget>();
+    // videoWidget_ = std::make_unique<QVideoWidget>();
     mediaPlayer_ = std::make_unique<QMediaPlayer>(nullptr, QMediaPlayer::StreamPlayback);
 }
 
@@ -70,21 +71,35 @@ void QtVideoOutput::write(uint64_t, const aasdk::common::DataConstBuffer& buffer
 
 void QtVideoOutput::onStartPlayback()
 {
-    videoWidget_->setAspectRatioMode(Qt::IgnoreAspectRatio);
-    videoWidget_->setFocus();
-    videoWidget_->setWindowFlags(Qt::WindowStaysOnTopHint);
-    videoWidget_->setFullScreen(true);
-    videoWidget_->show();
+    QVideoWidget *aaVideo = mainWindow->findChild<QVideoWidget*>("aaVideoWidget");
+    aaVideo->setAspectRatioMode(Qt::IgnoreAspectRatio);
+    aaVideo->setFocus();
+    aaVideo->setWindowFlags(Qt::WindowStaysOnTopHint);
+    aaVideo->raise();
+    aaVideo->show();
+    mainWindow->findChild<QFrame*>("idleFrame")->hide();
+    mainWindow->findChild<QFrame*>("androidAutoFrame")->show();
 
-    mediaPlayer_->setVideoOutput(videoWidget_.get());
+    // mainWindow->setFullScreen(true);
+
+    // videoWidget_->setAspectRatioMode(Qt::IgnoreAspectRatio);
+    // videoWidget_->setFocus();
+    // videoWidget_->setWindowFlags(Qt::WindowStaysOnTopHint);
+    // videoWidget_->setFullScreen(false);
+    // videoWidget_->hide();
+    // videoWidget_->show();
+
+    mediaPlayer_->setVideoOutput(aaVideo);
     mediaPlayer_->setMedia(QMediaContent(), &videoBuffer_);
     mediaPlayer_->play();
 }
 
 void QtVideoOutput::onStopPlayback()
 {
-    videoWidget_->hide();
+    // videoWidget_->hide();
     mediaPlayer_->stop();
+    mainWindow->findChild<QFrame*>("idleFrame")->show();
+    mainWindow->findChild<QFrame*>("androidAutoFrame")->hide();
 }
 
 }

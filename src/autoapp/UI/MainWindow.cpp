@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <f1x/openauto/autoapp/UI/MainWindow.hpp>
 #include "ui_mainwindow.h"
+#include <QVideoWidget>
 
 namespace f1x
 {
@@ -38,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent)
     // connect(ui_->pushButtonExit, &QPushButton::clicked, this, &MainWindow::exit);
     connect(ui_->pushButtonToggleCursor, &QPushButton::clicked, this, &MainWindow::toggleCursor);
     connect(ui_->pushButtonWirelessConnection, &QPushButton::clicked, this, &MainWindow::openConnectDialog);
+    // QVideoWidget* aaOut;
+    // aaOut = new QVideoWidget();
+    // aaOut->setVideoOutput(ui_->aaVideoWidget);
+    // ui_->aaVideoWidget = aaOut;
+    // ui_->addWidget(aaOut);
 }
 
 MainWindow::~MainWindow()
