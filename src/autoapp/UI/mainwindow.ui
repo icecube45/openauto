@@ -10,6 +10,12 @@
     <height>320</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>10000000</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -18,75 +24,7 @@
 color: rgb(238, 238, 236);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButtonSettings">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>270</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Settings</string>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonToggleCursor">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>270</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Cursor</string>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonWirelessConnection">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>270</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>11</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Wireless</string>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>32</width>
-      <height>32</height>
-     </size>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="wallpaper">
+   <widget class="QFrame" name="idleFrame">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -95,19 +33,153 @@ color: rgb(238, 238, 236);</string>
       <height>320</height>
      </rect>
     </property>
-    <property name="lineWidth">
-     <number>-2</number>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/wallpaper.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
     </property>
+    <widget class="QLabel" name="wallpaper">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>480</width>
+       <height>320</height>
+      </rect>
+     </property>
+     <property name="lineWidth">
+      <number>-2</number>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/wallpaper.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonSettings">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>270</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Settings</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonWirelessConnection">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>270</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Wireless</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonToggleCursor">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>270</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cursor</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+    </widget>
    </widget>
-   <zorder>wallpaper</zorder>
-   <zorder>pushButtonSettings</zorder>
-   <zorder>pushButtonToggleCursor</zorder>
-   <zorder>pushButtonWirelessConnection</zorder>
+   <widget class="QFrame" name="androidAutoFrame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>480</width>
+      <height>320</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QVideoWidget" name="aaVideoWidget" native="true">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>480</width>
+       <height>320</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>480</width>
+       <height>320</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>480</width>
+       <height>320</height>
+      </size>
+     </property>
+     <property name="cursor">
+      <cursorShape>ArrowCursor</cursorShape>
+     </property>
+    </widget>
+   </widget>
+   <zorder>androidAutoFrame</zorder>
+   <zorder>idleFrame</zorder>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QVideoWidget</class>
+   <extends>QWidget</extends>
+   <header>qvideowidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>pushButtonToggleCursor</tabstop>
   <tabstop>pushButtonWirelessConnection</tabstop>
