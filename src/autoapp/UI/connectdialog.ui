@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>301</width>
-    <height>389</height>
+    <width>480</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,10 +65,10 @@
   <widget class="QLabel" name="labelHeadUnitServerInfo">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>260</y>
-     <width>221</width>
-     <height>81</height>
+     <x>290</x>
+     <y>20</y>
+     <width>191</width>
+     <height>281</height>
     </rect>
    </property>
    <property name="text">
@@ -81,8 +81,8 @@
   <widget class="QLabel" name="labelCopyrightsInfoIcon">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>290</y>
+     <x>290</x>
+     <y>10</y>
      <width>21</width>
      <height>21</height>
     </rect>
@@ -94,8 +94,8 @@
   <widget class="QPushButton" name="pushButtonCancel">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>340</y>
+     <x>10</x>
+     <y>270</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -107,8 +107,8 @@
   <widget class="QPushButton" name="pushButtonConnect">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>340</y>
+     <x>140</x>
+     <y>270</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -120,8 +120,8 @@
   <widget class="QProgressBar" name="progressBarConnect">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>340</y>
+     <x>142</x>
+     <y>270</y>
      <width>121</width>
      <height>41</height>
     </rect>
@@ -136,8 +136,8 @@
   <widget class="QLabel" name="labelConnecting">
    <property name="geometry">
     <rect>
-     <x>188</x>
-     <y>350</y>
+     <x>160</x>
+     <y>280</y>
      <width>91</width>
      <height>20</height>
     </rect>
@@ -155,6 +155,8 @@
   <zorder>labelConnecting</zorder>
   <zorder>pushButtonConnect</zorder>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../assets/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
