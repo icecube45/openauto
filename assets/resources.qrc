@@ -1,8 +1,12 @@
 <RCC>
-    <qresource prefix="/">
-        <file>ico_androidauto.png</file>
-        <file>ico_warning.png</file>
-        <file>ico_setting.png</file>
-        <file>ico_info.png</file>
-    </qresource>
+  <qresource prefix="/">
+    <file>wallpaper.png</file>
+    <file>ico_androidauto.png</file>
+    <file>ico_warning.png</file>
+    <file>ico_setting.png</file>
+    <file>ico_info.png</file>
+    <file>ico_exit.png</file>
+    <file>ico_reset.png</file>
+    <file>ico_save.png</file>
+  </qresource>
 </RCC>
