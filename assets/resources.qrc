@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="/">
+    <file>ico_cursor.png</file>
+    <file>ico_wireless.png</file>
+    <file>ico_settings.png</file>
     <file>wallpaper.png</file>
     <file>ico_androidauto.png</file>
     <file>ico_warning.png</file>

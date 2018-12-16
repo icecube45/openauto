@@ -59,13 +59,23 @@ color: rgb(238, 238, 236);</string>
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>270</y>
-       <width>161</width>
-       <height>41</height>
+       <y>280</y>
+       <width>40</width>
+       <height>40</height>
       </rect>
      </property>
      <property name="text">
-      <string>Settings</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../assets/resources.qrc">
+       <normaloff>:/ico_settings.png</normaloff>:/ico_settings.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
      <property name="autoDefault">
       <bool>false</bool>
@@ -77,10 +87,10 @@ color: rgb(238, 238, 236);</string>
     <widget class="QPushButton" name="pushButtonWirelessConnection">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>270</y>
-       <width>161</width>
-       <height>41</height>
+       <x>40</x>
+       <y>280</y>
+       <width>40</width>
+       <height>40</height>
       </rect>
      </property>
      <property name="font">
@@ -89,7 +99,11 @@ color: rgb(238, 238, 236);</string>
       </font>
      </property>
      <property name="text">
-      <string>Wireless</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../assets/resources.qrc">
+       <normaloff>:/ico_wireless.png</normaloff>:/ico_wireless.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -107,14 +121,18 @@ color: rgb(238, 238, 236);</string>
     <widget class="QPushButton" name="pushButtonToggleCursor">
      <property name="geometry">
       <rect>
-       <x>320</x>
-       <y>270</y>
-       <width>161</width>
-       <height>41</height>
+       <x>80</x>
+       <y>280</y>
+       <width>40</width>
+       <height>40</height>
       </rect>
      </property>
      <property name="text">
-      <string>Cursor</string>
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../assets/resources.qrc">
+       <normaloff>:/ico_cursor.png</normaloff>:/ico_cursor.png</iconset>
      </property>
      <property name="autoDefault">
       <bool>false</bool>
@@ -132,6 +150,12 @@ color: rgb(238, 238, 236);</string>
       <width>480</width>
       <height>320</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>480</width>
+      <height>320</height>
+     </size>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
