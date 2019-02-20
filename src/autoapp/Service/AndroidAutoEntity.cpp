@@ -249,21 +249,21 @@ void AndroidAutoEntity::triggerQuit()
 
 void AndroidAutoEntity::schedulePing()
 {
-    auto promise = IPinger::Promise::defer(strand_);
-    promise->then([this, self = this->shared_from_this()]() {
-        this->sendPing();
-        this->schedulePing();
-    },
-    [this, self = this->shared_from_this()](auto error) {
-        if(error != aasdk::error::ErrorCode::OPERATION_ABORTED &&
-           error != aasdk::error::ErrorCode::OPERATION_IN_PROGRESS)
-        {
-            OPENAUTO_LOG(error) << "[AndroidAutoEntity] ping timer exceeded.";
-            this->triggerQuit();
-        }
-    });
-
-    pinger_->ping(std::move(promise));
+    // auto promise = IPinger::Promise::defer(strand_);
+    // promise->then([this, self = this->shared_from_this()]() {
+    //     this->sendPing();
+    //     this->schedulePing();
+    // },
+    // [this, self = this->shared_from_this()](auto error) {
+    //     if(error != aasdk::error::ErrorCode::OPERATION_ABORTED &&
+    //        error != aasdk::error::ErrorCode::OPERATION_IN_PROGRESS)
+    //     {
+    //         OPENAUTO_LOG(error) << "[AndroidAutoEntity] ping timer exceeded.";
+    //         this->triggerQuit();
+    //     }
+    // });
+    // 
+    // pinger_->ping(std::move(promise));
 }
 
 void AndroidAutoEntity::sendPing()
