@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>321</height>
+    <width>640</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,8 +34,8 @@ color: rgb(238, 238, 236);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>440</width>
-     <height>320</height>
+     <width>640</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="font">
@@ -828,10 +828,10 @@ color: rgb(238, 238, 236);</string>
   <widget class="QPushButton" name="pushButtonResetToDefaults">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>240</y>
-     <width>40</width>
-     <height>40</height>
+     <x>560</x>
+     <y>320</y>
+     <width>80</width>
+     <height>80</height>
     </rect>
    </property>
    <property name="text">
@@ -854,10 +854,10 @@ color: rgb(238, 238, 236);</string>
   <widget class="QPushButton" name="pushButtonCancel">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>200</y>
-     <width>40</width>
-     <height>40</height>
+     <x>560</x>
+     <y>240</y>
+     <width>80</width>
+     <height>80</height>
     </rect>
    </property>
    <property name="text">
@@ -884,10 +884,10 @@ color: rgb(238, 238, 236);</string>
   <widget class="QPushButton" name="pushButtonSave">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>280</y>
-     <width>40</width>
-     <height>40</height>
+     <x>560</x>
+     <y>400</y>
+     <width>80</width>
+     <height>80</height>
     </rect>
    </property>
    <property name="text">
