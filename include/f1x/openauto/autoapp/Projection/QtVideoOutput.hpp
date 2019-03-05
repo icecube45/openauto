@@ -23,6 +23,7 @@
 #include <boost/noncopyable.hpp>
 #include <f1x/openauto/autoapp/Projection/VideoOutput.hpp>
 #include <f1x/openauto/autoapp/Projection/SequentialBuffer.hpp>
+#include <f1x/openauto/autoapp/Configuration/IConfiguration.hpp>
 
 namespace f1x
 {
@@ -47,7 +48,6 @@ public:
 signals:
     void startPlayback();
     void stopPlayback();
-
 protected slots:
     void createVideoOutput();
     void onStartPlayback();

@@ -39,6 +39,8 @@ public:
     aasdk::proto::enums::VideoResolution::Enum getVideoResolution() const override;
     size_t getScreenDPI() const override;
     QRect getVideoMargins() const override;
+    int getVideoBrightness();
+    int getVideoContrast();
 
 protected:
     configuration::IConfiguration::Pointer configuration_;

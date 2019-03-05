@@ -49,6 +49,8 @@ public:
     virtual aasdk::proto::enums::VideoResolution::Enum getVideoResolution() const = 0;
     virtual size_t getScreenDPI() const = 0;
     virtual QRect getVideoMargins() const = 0;
+    virtual int getVideoBrightness() =0;
+    virtual int getVideoContrast()=0;
 };
 
 }

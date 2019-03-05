@@ -53,6 +53,15 @@ QRect VideoOutput::getVideoMargins() const
     return configuration_->getVideoMargins();
 }
 
+int VideoOutput::getVideoContrast()
+{
+  return configuration_->getVideoContrast();
+}
+int VideoOutput::getVideoBrightness()
+{
+  return configuration_->getVideoBrightness();
+}
+
 }
 }
 }

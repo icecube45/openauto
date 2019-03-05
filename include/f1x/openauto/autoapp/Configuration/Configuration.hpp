@@ -54,7 +54,10 @@ public:
     int32_t getOMXLayerIndex() const override;
     void setVideoMargins(QRect value) override;
     QRect getVideoMargins() const override;
-
+    int getVideoBrightness();
+    int getVideoContrast();
+    void setVideoBrightness(int value);
+    void setVideoContrast(int value);
     bool getTouchscreenEnabled() const override;
     void setTouchscreenEnabled(bool value) override;
     ButtonCodes getButtonCodes() const override;
@@ -84,6 +87,8 @@ private:
     size_t screenDPI_;
     int32_t omxLayerIndex_;
     QRect videoMargins_;
+    int32_t videoBrightness_;
+    int32_t videoContrast_;
     bool enableTouchscreen_;
     ButtonCodes buttonCodes_;
     BluetoothAdapterType bluetoothAdapterType_;
@@ -103,6 +108,8 @@ private:
     static const std::string cVideoOMXLayerIndexKey;
     static const std::string cVideoMarginWidth;
     static const std::string cVideoMarginHeight;
+    static const std::string cVideoBrightness;
+    static const std::string cVideoContrast;
 
     static const std::string cAudioMusicAudioChannelEnabled;
     static const std::string cAudioSpeechAudioChannelEnabled;
@@ -128,6 +135,7 @@ private:
     static const std::string cInputScrollWheelButtonKey;
     static const std::string cInputBackButtonKey;
     static const std::string cInputEnterButtonKey;
+
 };
 
 }
