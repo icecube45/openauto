@@ -63,6 +63,10 @@ public:
     virtual int32_t getOMXLayerIndex() const = 0;
     virtual void setVideoMargins(QRect value) = 0;
     virtual QRect getVideoMargins() const = 0;
+    virtual int getVideoBrightness() = 0;
+    virtual int getVideoContrast() = 0 ;
+    virtual void setVideoBrightness(int value) = 0;
+    virtual void setVideoContrast(int value) = 0;
 
     virtual bool getTouchscreenEnabled() const = 0;
     virtual void setTouchscreenEnabled(bool value) = 0;

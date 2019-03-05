@@ -39,6 +39,8 @@ const std::string Configuration::cVideoScreenDPIKey = "Video.ScreenDPI";
 const std::string Configuration::cVideoOMXLayerIndexKey = "Video.OMXLayerIndex";
 const std::string Configuration::cVideoMarginWidth = "Video.MarginWidth";
 const std::string Configuration::cVideoMarginHeight = "Video.MarginHeight";
+const std::string Configuration::cVideoBrightness = "Video.Brightness";
+const std::string Configuration::cVideoContrast = "Video.Contrast";
 
 const std::string Configuration::cAudioMusicAudioChannelEnabled = "Audio.MusicAudioChannelEnabled";
 const std::string Configuration::cAudioSpeechAudioChannelEnabled = "Audio.SpeechAudioChannelEnabled";
@@ -91,7 +93,8 @@ void Configuration::load()
 
         omxLayerIndex_ = iniConfig.get<int32_t>(cVideoOMXLayerIndexKey, 1);
         videoMargins_ = QRect(0, 0, iniConfig.get<int32_t>(cVideoMarginWidth, 0), iniConfig.get<int32_t>(cVideoMarginHeight, 0));
-
+        videoBrightness_ = iniConfig.get<int32_t>(cVideoBrightness, 0);
+        videoContrast_ = iniConfig.get<int32_t>(cVideoContrast, 0);
         enableTouchscreen_ = iniConfig.get<bool>(cInputEnableTouchscreenKey, true);
         this->readButtonCodes(iniConfig);
 
@@ -120,6 +123,8 @@ void Configuration::reset()
     videoFPS_ = aasdk::proto::enums::VideoFPS::_60;
     videoResolution_ = aasdk::proto::enums::VideoResolution::_480p;
     screenDPI_ = 140;
+    videoBrightness_ = 0;
+    videoContrast_ = 0;
     omxLayerIndex_ = 1;
     videoMargins_ = QRect(0, 0, 0, 0);
     enableTouchscreen_ = true;
@@ -143,7 +148,8 @@ void Configuration::save()
     iniConfig.put<int32_t>(cVideoOMXLayerIndexKey, omxLayerIndex_);
     iniConfig.put<uint32_t>(cVideoMarginWidth, videoMargins_.width());
     iniConfig.put<uint32_t>(cVideoMarginHeight, videoMargins_.height());
-
+    iniConfig.put<int>(cVideoBrightness, videoBrightness_);
+    iniConfig.put<int>(cVideoContrast, videoContrast_);
     iniConfig.put<bool>(cInputEnableTouchscreenKey, enableTouchscreen_);
     this->writeButtonCodes(iniConfig);
 
@@ -155,7 +161,18 @@ void Configuration::save()
     iniConfig.put<uint32_t>(cAudioOutputBackendType, static_cast<uint32_t>(audioOutputBackendType_));
     boost::property_tree::ini_parser::write_ini(cConfigFileName, iniConfig);
 }
-
+void Configuration::setVideoBrightness(int value){
+  videoBrightness_ = value;
+}
+void Configuration::setVideoContrast(int value){
+  videoContrast_ = value;
+}
+int Configuration::getVideoBrightness(){
+  return videoBrightness_;
+}
+int Configuration::getVideoContrast(){
+  return videoContrast_;
+}
 void Configuration::setHandednessOfTrafficType(HandednessOfTrafficType value)
 {
     handednessOfTrafficType_ = value;

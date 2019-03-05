@@ -72,6 +72,8 @@ void QtVideoOutput::write(uint64_t, const aasdk::common::DataConstBuffer& buffer
 void QtVideoOutput::onStartPlayback()
 {
     QVideoWidget *aaVideo = mainWindow->findChild<QVideoWidget*>("aaVideoWidget");
+    aaVideo->setBrightness(VideoOutput::getVideoBrightness());
+    aaVideo->setContrast(VideoOutput::getVideoContrast());
     aaVideo->setAspectRatioMode(Qt::IgnoreAspectRatio);
     aaVideo->setFocus();
     aaVideo->setWindowFlags(Qt::WindowStaysOnTopHint);
