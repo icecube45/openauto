@@ -19,6 +19,7 @@
 #include <aasdk_proto/DrivingStatusEnum.pb.h>
 #include <f1x/openauto/Common/Log.hpp>
 #include <f1x/openauto/autoapp/Service/SensorService.hpp>
+#include <fstream>
 
 namespace f1x
 {
@@ -30,8 +31,9 @@ namespace service
 {
 
 SensorService::SensorService(boost::asio::io_service& ioService, aasdk::messenger::IMessenger::Pointer messenger)
-    : strand_(ioService)
-    , channel_(std::make_shared<aasdk::channel::sensor::SensorServiceChannel>(strand_, std::move(messenger)))
+    : strand_(ioService),
+      timer_(ioService),
+      channel_(std::make_shared<aasdk::channel::sensor::SensorServiceChannel>(strand_, std::move(messenger)))
 {
 
 }
@@ -39,6 +41,10 @@ SensorService::SensorService(boost::asio::io_service& ioService, aasdk::messenge
 void SensorService::start()
 {
     strand_.dispatch([this, self = this->shared_from_this()]() {
+        if (is_file_exist("/tmp/night_mode_enabled")) {
+            this->isNight = true;
+        }
+        this->nightSensorPolling();
         OPENAUTO_LOG(info) << "[SensorService] start.";
         channel_->receive(this->shared_from_this());
     });
@@ -46,8 +52,23 @@ void SensorService::start()
 
 void SensorService::stop()
 {
+    this->stopPolling = true;
     strand_.dispatch([this, self = this->shared_from_this()]() {
         OPENAUTO_LOG(info) << "[SensorService] stop.";
+    });
+}
+
+void SensorService::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[SensorService] pause.";
+    });
+}
+
+void SensorService::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[SensorService] resume.";
     });
 }
 
@@ -121,11 +142,43 @@ void SensorService::sendDrivingStatusUnrestricted()
 void SensorService::sendNightData()
 {
     aasdk::proto::messages::SensorEventIndication indication;
-    indication.add_night_mode()->set_is_night(false);
+
+    if (SensorService::isNight) {
+        OPENAUTO_LOG(info) << "[SensorService] Mode night triggered";
+        indication.add_night_mode()->set_is_night(true);
+    } else {
+        OPENAUTO_LOG(info) << "[SensorService] Mode day triggered";
+        indication.add_night_mode()->set_is_night(false);
+    }
 
     auto promise = aasdk::channel::SendPromise::defer(strand_);
     promise->then([]() {}, std::bind(&SensorService::onChannelError, this->shared_from_this(), std::placeholders::_1));
     channel_->sendSensorEventIndication(indication, std::move(promise));
+    if (this->firstRun) {
+        this->firstRun = false;
+        this->previous = this->isNight;
+    }
+}
+
+void SensorService::nightSensorPolling()
+{
+    if (!this->stopPolling) {
+        strand_.dispatch([this, self = this->shared_from_this()]() {
+            this->isNight = is_file_exist("/tmp/night_mode_enabled");
+            if (this->previous != this->isNight && !this->firstRun) {
+                this->previous = this->isNight;
+                this->sendNightData();
+            }
+            timer_.expires_from_now(boost::posix_time::seconds(5));
+            timer_.async_wait(strand_.wrap(std::bind(&SensorService::nightSensorPolling, this->shared_from_this())));
+        });
+    }
+}
+
+bool SensorService::is_file_exist(const char *fileName)
+{
+    std::ifstream ifile(fileName, std::ios::in);
+    return ifile.good();
 }
 
 void SensorService::onChannelError(const aasdk::error::Error& e)

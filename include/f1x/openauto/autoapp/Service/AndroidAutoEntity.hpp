@@ -51,6 +51,8 @@ public:
 
     void start(IAndroidAutoEntityEventHandler& eventHandler) override;
     void stop() override;
+    void pause() override;
+    void resume() override;
     void onVersionResponse(uint16_t majorCode, uint16_t minorCode, aasdk::proto::enums::VersionResponseStatus::Enum status) override;
     void onHandshake(const aasdk::common::DataConstBuffer& payload) override;
     void onServiceDiscoveryRequest(const aasdk::proto::messages::ServiceDiscoveryRequest& request) override;

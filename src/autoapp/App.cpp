@@ -46,8 +46,23 @@ App::App(boost::asio::io_service& ioService, aasdk::usb::USBWrapper& usbWrapper,
 void App::waitForUSBDevice()
 {
     strand_.dispatch([this, self = this->shared_from_this()]() {
-        this->waitForDevice();
-        this->enumerateDevices();
+        try
+        {
+            this->waitForDevice();
+        }
+        catch(...)
+        {
+            OPENAUTO_LOG(error) << "[App] waitForUSBDevice() -exception caused by this->waitForDevice();";
+        }
+        try
+        {
+            this->enumerateDevices();
+        }
+        catch(...)
+        {
+            OPENAUTO_LOG(error) << "[App] waitForUSBDevice() exception caused by this->enumerateDevices()";
+        }
+
     });
 }
 
@@ -84,15 +99,32 @@ void App::stop()
 {
     strand_.dispatch([this, self = this->shared_from_this()]() {
         isStopped_ = true;
-        connectedAccessoriesEnumerator_->cancel();
-        usbHub_->cancel();
+        try {
+            connectedAccessoriesEnumerator_->cancel();
+        } catch (...) {
+            OPENAUTO_LOG(error) << "[App] stop: exception caused by connectedAccessoriesEnumerator_->cancel()";
+        }
+        try {
+            usbHub_->cancel();
+        } catch (...) {
+            OPENAUTO_LOG(error) << "[App] stop: exception caused by usbHub_->cancel();";
+        }
 
         if(androidAutoEntity_ != nullptr)
         {
-            androidAutoEntity_->stop();
-            androidAutoEntity_.reset();
+            try {
+                androidAutoEntity_->stop();
+            } catch (...) {
+                OPENAUTO_LOG(error) << "[App] stop: exception caused by androidAutoEntity_->stop();";
+            }
+            try {
+                androidAutoEntity_.reset();
+            } catch (...) {
+                OPENAUTO_LOG(error) << "[App] stop: exception caused by androidAutoEntity_.reset();";
+            }
         }
     });
+
 }
 
 void App::aoapDeviceHandler(aasdk::usb::DeviceHandle deviceHandle)
@@ -107,11 +139,17 @@ void App::aoapDeviceHandler(aasdk::usb::DeviceHandle deviceHandle)
 
     try
     {
-        connectedAccessoriesEnumerator_->cancel();
+        // ignore autostart if exit to csng was used
+        if (!disableAutostartEntity) {
+            OPENAUTO_LOG(info) << "[App] Start Android Auto allowed - let's go.";
+            connectedAccessoriesEnumerator_->cancel();
 
-        auto aoapDevice(aasdk::usb::AOAPDevice::create(usbWrapper_, ioService_, deviceHandle));
-        androidAutoEntity_ = androidAutoEntityFactory_.create(std::move(aoapDevice));
-        androidAutoEntity_->start(*this);
+            auto aoapDevice(aasdk::usb::AOAPDevice::create(usbWrapper_, ioService_, deviceHandle));
+            androidAutoEntity_ = androidAutoEntityFactory_.create(std::move(aoapDevice));
+            androidAutoEntity_->start(*this);
+        } else {
+            OPENAUTO_LOG(info) << "[App] Start Android Auto not allowed - skip.";
+        }
     }
     catch(const aasdk::error::Error& error)
     {
@@ -145,17 +183,51 @@ void App::waitForDevice()
     usbHub_->start(std::move(promise));
 }
 
+void App::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[App] pause...";
+        androidAutoEntity_->pause();
+    });
+}
+
+void App::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        if(androidAutoEntity_ != nullptr)
+        {
+            OPENAUTO_LOG(info) << "[App] resume...";
+            androidAutoEntity_->resume();
+        } else {
+            OPENAUTO_LOG(info) << "[App] Ignore resume -> no androidAutoEntity_ ...";
+        }
+    });
+}
+
 void App::onAndroidAutoQuit()
 {
     strand_.dispatch([this, self = this->shared_from_this()]() {
-        OPENAUTO_LOG(info) << "[App] quit.";
+        OPENAUTO_LOG(info) << "[App] onAndroidAutoQuit.";
 
-        androidAutoEntity_->stop();
-        androidAutoEntity_.reset();
+        try {
+            androidAutoEntity_->stop();
+        } catch (...) {
+            OPENAUTO_LOG(error) << "[App] onAndroidAutoQuit: exception caused by androidAutoEntity_->stop();";
+        }
+        try {
+            androidAutoEntity_.reset();
+        } catch (...) {
+            OPENAUTO_LOG(error) << "[App] onAndroidAutoQuit: exception caused by androidAutoEntity_.reset();";
+        }
 
         if(!isStopped_)
         {
-            this->waitForDevice();
+            try {
+                this->waitForDevice();
+            } catch (...) {
+                OPENAUTO_LOG(error) << "[App] onAndroidAutoQuit: exception caused by this->waitForDevice();";
+            }
+
         }
     });
 }
@@ -167,7 +239,11 @@ void App::onUSBHubError(const aasdk::error::Error& error)
     if(error != aasdk::error::ErrorCode::OPERATION_ABORTED &&
        error != aasdk::error::ErrorCode::OPERATION_IN_PROGRESS)
     {
-        this->waitForDevice();
+        try {
+            this->waitForDevice();
+        } catch (...) {
+            OPENAUTO_LOG(error) << "[App] onUSBHubError: exception caused by this->waitForDevice();";
+        }
     }
 }
 

@@ -53,6 +53,20 @@ void AudioService::stop()
     });
 }
 
+void AudioService::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[AudioService] pause.";
+    });
+}
+
+void AudioService::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[AudioService] resume.";
+    });
+}
+
 void AudioService::fillFeatures(aasdk::proto::messages::ServiceDiscoveryResponse& response)
 {
     OPENAUTO_LOG(info) << "[AudioService] fill features, channel: " << aasdk::messenger::channelIdToString(channel_->getId());

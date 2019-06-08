@@ -53,6 +53,20 @@ void InputService::stop()
     });
 }
 
+void InputService::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[InputService] pause.";
+    });
+}
+
+void InputService::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[InputService] resume.";
+    });
+}
+
 void InputService::fillFeatures(aasdk::proto::messages::ServiceDiscoveryResponse& response)
 {
     OPENAUTO_LOG(info) << "[InputService] fill features.";

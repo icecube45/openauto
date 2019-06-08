@@ -36,7 +36,6 @@ QtVideoOutput::QtVideoOutput(configuration::IConfiguration::Pointer configuratio
     this->moveToThread(QApplication::instance()->thread());
     connect(this, &QtVideoOutput::startPlayback,  this, &QtVideoOutput::onStartPlayback, Qt::QueuedConnection);
     connect(this, &QtVideoOutput::stopPlayback, this, &QtVideoOutput::onStopPlayback, Qt::QueuedConnection);
-
     QMetaObject::invokeMethod(this, "createVideoOutput", Qt::BlockingQueuedConnection);
 }
 

@@ -26,6 +26,8 @@ class ConnectDialog : public QDialog
 public:
     explicit ConnectDialog(boost::asio::io_service& ioService,  aasdk::tcp::ITCPWrapper& tcpWrapper, openauto::autoapp::configuration::IRecentAddressesList& recentAddressesList, QWidget *parent = nullptr);
     ~ConnectDialog() override;
+    void autoconnect();
+    void loadClientList();
 
 signals:
     void connectToDevice(const QString& ipAddress);
@@ -37,6 +39,7 @@ private slots:
     void onConnectionFailed(const QString& message);
     void onConnectionSucceed(aasdk::tcp::ITCPEndpoint::SocketPointer socket, const std::string& ipAddress);
     void onRecentAddressClicked(const QModelIndex& index);
+    void onUpdateButtonClicked();
 
 private:
     void insertIpAddress(const std::string& ipAddress);

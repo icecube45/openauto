@@ -52,6 +52,20 @@ void BluetoothService::stop()
     });
 }
 
+void BluetoothService::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[BluetoothService] pause.";
+    });
+}
+
+void BluetoothService::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[BluetoothService] resume.";
+    });
+}
+
 void BluetoothService::fillFeatures(aasdk::proto::messages::ServiceDiscoveryResponse& response)
 {
     OPENAUTO_LOG(info) << "[BluetoothService] fill features";

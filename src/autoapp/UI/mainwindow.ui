@@ -8,7 +8,12 @@
     <y>0</y>
     <width>640</width>
     <height>480</height>
-   </rect>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+   </font>
   </property>
   <property name="maximumSize">
    <size>
@@ -20,8 +25,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(46, 52, 54);
-color: rgb(238, 238, 236);</string>
+   <string notr="true">color: rgb(0, 0, 0);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="idleFrame">

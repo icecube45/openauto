@@ -17,6 +17,7 @@
 */
 
 #include <f1x/openauto/autoapp/Service/Pinger.hpp>
+#include <f1x/openauto/Common/Log.hpp>
 
 namespace f1x
 {
@@ -50,6 +51,7 @@ void Pinger::ping(Promise::Pointer promise)
         else
         {
             ++pingsCount_;
+            OPENAUTO_LOG(info) << "[Pinger] Ping counter: " << pingsCount_;
 
             promise_ = std::move(promise);
             timer_.expires_from_now(boost::posix_time::milliseconds(duration_));
@@ -62,6 +64,7 @@ void Pinger::pong()
 {
     strand_.dispatch([this, self = this->shared_from_this()]() {
         ++pongsCount_;
+        OPENAUTO_LOG(info) << "[Pinger] Pong counter: " << pongsCount_;
     });
 }
 
@@ -75,7 +78,7 @@ void Pinger::onTimerExceeded(const boost::system::error_code& error)
     {
         promise_->reject(aasdk::error::Error(aasdk::error::ErrorCode::OPERATION_ABORTED));
     }
-    else if(pingsCount_ - pongsCount_ > 1)
+    else if(pingsCount_ - pongsCount_ > 4)
     {
         promise_->reject(aasdk::error::Error());
     }

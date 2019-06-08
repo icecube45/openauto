@@ -55,6 +55,7 @@ bool RtAudioOutput::open()
             streamOptions.flags = RTAUDIO_MINIMIZE_LATENCY | RTAUDIO_SCHEDULE_REALTIME;
             uint32_t bufferFrames = sampleRate_ == 16000 ? 1024 : 2048; //according to the observation of audio packets
             dac_->openStream(&parameters, nullptr, RTAUDIO_SINT16, sampleRate_, &bufferFrames, &RtAudioOutput::audioBufferReadHandler, static_cast<void*>(this), &streamOptions);
+            OPENAUTO_LOG(info) << "[RtAudioOutput] Sample Rate: " << sampleRate_;
             return audioBuffer_.open(QIODevice::ReadWrite);
         }
         catch(const RtAudioError& e)

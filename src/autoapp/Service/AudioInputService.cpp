@@ -54,6 +54,20 @@ void AudioInputService::stop()
     });
 }
 
+void AudioInputService::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[AudioInputService] pause.";
+    });
+}
+
+void AudioInputService::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[AudioInputService] resume.";
+    });
+}
+
 void AudioInputService::fillFeatures(aasdk::proto::messages::ServiceDiscoveryResponse& response)
 {
     OPENAUTO_LOG(info) << "[AudioInputService] fill features.";

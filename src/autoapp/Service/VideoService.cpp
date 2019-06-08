@@ -18,6 +18,7 @@
 
 #include <f1x/openauto/Common/Log.hpp>
 #include <f1x/openauto/autoapp/Service/VideoService.hpp>
+#include <fstream>
 
 namespace f1x
 {
@@ -50,6 +51,20 @@ void VideoService::stop()
     strand_.dispatch([this, self = this->shared_from_this()]() {
         OPENAUTO_LOG(info) << "[VideoService] stop.";
         videoOutput_->stop();
+    });
+}
+
+void VideoService::pause()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[VideoService] pause.";
+    });
+}
+
+void VideoService::resume()
+{
+    strand_.dispatch([this, self = this->shared_from_this()]() {
+        OPENAUTO_LOG(info) << "[VideoService] resume.";
     });
 }
 
@@ -156,6 +171,18 @@ void VideoService::onVideoFocusRequest(const aasdk::proto::messages::VideoFocusR
     OPENAUTO_LOG(info) << "[VideoService] video focus request, display index: " << request.disp_index()
                        << ", focus mode: " << request.focus_mode()
                        << ", focus reason: " << request.focus_reason();
+
+    // stop video service on go back to openauto
+    if (request.focus_mode() == 2) {
+        OPENAUTO_LOG(info) << "[VideoService] Back to CSNG...";
+        try {
+            if (!std::ifstream("/tmp/entityexit")) {
+                std::ofstream("/tmp/entityexit");
+            }
+        } catch (...) {
+            OPENAUTO_LOG(error) << "[VideoService] Error in creating entityexit";
+        }
+    }
 
     this->sendVideoFocusIndication();
     channel_->receive(this->shared_from_this());
