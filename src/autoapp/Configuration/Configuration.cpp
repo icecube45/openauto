@@ -154,22 +154,11 @@ void Configuration::load()
 void Configuration::reset()
 {
     handednessOfTrafficType_ = HandednessOfTrafficType::LEFT_HAND_DRIVE;
-    showClock_ = true;
-    showBigClock_ = false;
-    oldGUI_ = false;
     alphaTrans_ = 50;
     hideMenuToggle_ = false;
     hideAlpha_ = false;
-    showLux_ = false;
     showCursor_ = false;
-    hideBrightnessControl_ = false;
     hideWarning_ = false;
-    showNetworkinfo_ = false;
-    mp3MasterPath_ = "/media/MYMEDIA";
-    mp3SubFolder_ = "/";
-    mp3Track_ = 0;
-    mp3AutoPlay_ = false;
-    showAutoPlay_ = false;
     videoFPS_ = aasdk::proto::enums::VideoFPS::_30;
     videoResolution_ = aasdk::proto::enums::VideoResolution::_480p;
     screenDPI_ = 140;

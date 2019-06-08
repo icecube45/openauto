@@ -41,19 +41,7 @@ UpdateDialog::UpdateDialog(QWidget *parent)
     watcher_tmp->addPath("/tmp");
     connect(watcher_tmp, &QFileSystemWatcher::directoryChanged, this, &UpdateDialog::updateCheck);
 
-    watcher_download = new QFileSystemWatcher(this);
-    watcher_download->addPath("/media/USBDRIVES/CSSTORAGE");
-    connect(watcher_download, &QFileSystemWatcher::directoryChanged, this, &UpdateDialog::downloadCheck);
-
-    QStorageInfo storage("/media/USBDRIVES/CSSTORAGE");
-    storage.refresh();
-    if (storage.isValid() && storage.isReady()) {
-        ui_->system->show();
-        ui_->labelNoStorage->hide();
-    } else {
-        ui_->labelNoStorage->show();
-        ui_->system->hide();
-    }
+  
 }
 
 UpdateDialog::~UpdateDialog()
@@ -206,4 +194,3 @@ void f1x::openauto::autoapp::ui::UpdateDialog::updateCheck()
 }
 }
 }
-

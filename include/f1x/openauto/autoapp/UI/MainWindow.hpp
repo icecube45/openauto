@@ -24,8 +24,6 @@
 #include <f1x/openauto/autoapp/Configuration/IConfiguration.hpp>
 
 #include <QMediaPlayer>
-#include <QListWidgetItem>
-#include <QListWidget>
 #include <QMediaMetaData>
 #include <QDir>
 #include <QDirIterator>
@@ -152,9 +150,6 @@ private:
     QString custom_button_color_c5 = "186,189,192";
     QString custom_button_color_c6 = "186,189,192";
 
-    QString selectedMp3file;
-    QString musicfolder = "/media/CSSTORAGE/Music";
-    QString albumfolder = "/";
     QString date_text;
 
     QMediaPlaylist *playlist;

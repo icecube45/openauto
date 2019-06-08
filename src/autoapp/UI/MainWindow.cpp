@@ -54,35 +54,15 @@ MainWindow::MainWindow(configuration::IConfiguration::Pointer configuration, QWi
     // set default bg color to black
     this->setStyleSheet("QMainWindow {background-color: rgb(0,0,0);}");
 
-    // Set default font and size
-    int id = QFontDatabase::addApplicationFont(":/Roboto-Regular.ttf");
-    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-    QFont _font(family, 11);
-    qApp->setFont(_font);
+    // // Set default font and size
+    // int id = QFontDatabase::addApplicationFont(":/Roboto-Regular.ttf");
+    // QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+    // QFont _font(family, 11);
+    // qApp->setFont(_font);
 
     this->configuration_ = configuration;
 
     // trigger files
-    this->nightModeEnabled = check_file_exist(this->nightModeFile);
-    this->devModeEnabled = check_file_exist(this->devModeFile);
-    this->wifiButtonForce = check_file_exist(this->wifiButtonFile);
-    this->cameraButtonForce = check_file_exist(this->cameraButtonFile);
-    this->brightnessButtonForce = check_file_exist(this->brightnessButtonFile);
-    this->systemDebugmode = check_file_exist(this->debugModeFile);
-    this->lightsensor = check_file_exist(this->lsFile);
-    this->c1ButtonForce = check_file_exist(this->custom_button_file_c1);
-    this->c2ButtonForce = check_file_exist(this->custom_button_file_c2);
-    this->c3ButtonForce = check_file_exist(this->custom_button_file_c3);
-    this->c4ButtonForce = check_file_exist(this->custom_button_file_c4);
-    this->c5ButtonForce = check_file_exist(this->custom_button_file_c5);
-    this->c6ButtonForce = check_file_exist(this->custom_button_file_c6);
-
-    // wallpaper stuff
-    this->wallpaperDayFileExists = check_file_exist("wallpaper.png");
-    this->wallpaperNightFileExists = check_file_exist("wallpaper-night.png");
-    this->wallpaperClassicDayFileExists = check_file_exist("wallpaper-classic.png");
-    this->wallpaperClassicNightFileExists = check_file_exist("wallpaper-classic-night.png");
-    this->wallpaperEQFileExists = check_file_exist("wallpaper-eq.png");
 
     ui_->setupUi(this);
     connect(ui_->pushButtonSettings, &QPushButton::clicked, this, &MainWindow::openSettings);
@@ -110,7 +90,8 @@ MainWindow::~MainWindow()
 
 void f1x::openauto::autoapp::ui::MainWindow::updateAlpha()
 {
-    int value = configuration_->getAlphaTrans();
+  int value = 0;
+    // int value = configuration_->getAlphaTrans();
     //int n = snprintf(this->alpha_str, 5, "%d", value);
 
     if (value != this->alpha_current_str) {
