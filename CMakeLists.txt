@@ -66,7 +66,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}
                     ${BCM_HOST_INCLUDE_DIRS}
                     ${ILCLIENT_INCLUDE_DIRS}
                     ${include_directory})
-								
+
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 set(common_include_directory ${include_directory}/f1x/openauto/Common)
